@@ -3,7 +3,17 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-    <persistence-unit name="default">
+
+    <persistence-unit name="default" transaction-type="JTA">
+
+        <jta-data-source>jdbc/jakartaisg</jta-data-source>
+
+        <class>entity.Company</class>
+
+        <properties>
+            <property name="eclipselink.logging.level" value="FINE"/>
+        </properties>
 
     </persistence-unit>
+
 </persistence>
