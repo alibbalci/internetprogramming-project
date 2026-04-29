@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Kurumsal Yönetim</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef3f8;
+            margin: 0;
+            padding: 0;
+            color: #24384a;
+        }
+
+        .topbar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 18px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .topbar a {
+            color: white;
+            float: right;
+            font-size: 15px;
+            text-decoration: none;
+            margin-top: 5px;
+        }
+
+        .container {
+            padding: 24px;
+        }
+
+        .form-line {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .form-line label {
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .input {
+            width: 250px;
+            height: 34px;
+            border: 1px solid #b9c4cf;
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 15px;
+        }
+
+        .section-title {
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 11px 42px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #1f2d3a;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        .table th {
+            background-color: #e5e5e5;
+            color: #222;
+            border: 1px solid #c9c9c9;
+            padding: 9px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .table td {
+            border: 1px solid #d8d8d8;
+            padding: 8px;
+            height: 26px;
+        }
+
+        .small-btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .delete-btn {
+            background-color: #8b2f2f;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <div class="topbar">
+        İSG Yönetim Sistemi
+        <a href="#{request.contextPath}/panel/index.xhtml">Panele Dön</a>
+    </div>
+
+    <div class="container">
+
+        <h:form id="institutionForm">
+
+            <div class="form-line">
+                <h:outputLabel value="OSGB Ünvanı:" />
+                <h:inputText value="#{institutionBean.institution.osgbTitle}" styleClass="input" />
+
+                <h:outputLabel value="Adres:" />
+                <h:inputText value="#{institutionBean.institution.address}" styleClass="input" />
+            </div>
+
+            <div class="section-title">
+                Kurumsal Yönetim
+            </div>
+
+            <div class="button-row">
+                <h:commandButton value="Ekle"
+                                 action="#{institutionBean.save}"
+                                 styleClass="btn" />
+
+                <h:commandButton value="Düzenle"
+                                 action="#{institutionBean.update}"
+                                 styleClass="btn" />
+
+                <h:commandButton value="Sil"
+                                 action="#{institutionBean.delete(institutionBean.institution)}"
+                                 styleClass="btn" />
+
+                <h:commandButton value="Temizle"
+                                 action="#{institutionBean.clear}"
+                                 styleClass="btn" />
+            </div>
+
+        </h:form>
+
+        <h:form id="institutionTableForm">
+
+            <h:dataTable value="#{institutionBean.list}"
+                         var="i"
+                         styleClass="table">
+
+                <h:column>
+                    <f:facet name="header">OSGB Ünvanı</f:facet>
+                    <h:outputText value="#{i.osgbTitle}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Adres</f:facet>
+                    <h:outputText value="#{i.address}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">İşlemler</f:facet>
+
+                    <h:commandButton value="Seç"
+                                     action="#{institutionBean.select(i)}"
+                                     styleClass="small-btn" />
+
+                    <h:commandButton value="Sil"
+                                     action="#{institutionBean.delete(i)}"
+                                     styleClass="small-btn delete-btn" />
+                </h:column>
+
+            </h:dataTable>
+
+        </h:form>
+
+    </div>
+
+</h:body>
+</html>
