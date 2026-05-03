@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Çalışan Yönetimi</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef3f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .topbar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 18px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 25px;
+        }
+
+        .page-title {
+            color: #2c3e50;
+            margin-bottom: 16px;
+        }
+
+        .toolbar {
+            margin-bottom: 18px;
+        }
+
+        .toolbar .btn {
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .form-panel {
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            border: 1px solid #d6dce2;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 12px;
+            max-width: 720px;
+        }
+
+        .form-grid label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .form-grid input, .form-grid select {
+            padding: 8px;
+            border: 1px solid #b8c2cc;
+            border-radius: 4px;
+        }
+
+        .button-area {
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-orange {
+            background-color: #ff8c00;
+        }
+
+        .btn-red {
+            background-color: #c0392b;
+        }
+
+        .btn-gray {
+            background-color: #7f8c8d;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        .data-table th {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border: 1px solid #d6dce2;
+        }
+
+        .data-table td {
+            padding: 9px;
+            border: 1px solid #d6dce2;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            float: right;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .messages {
+            margin-bottom: 16px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <div class="topbar">
+        İSG Yönetim Sistemi
+        <h:link value="Panele Dön" outcome="/panel/index.xhtml" styleClass="back-link"/>
+    </div>
+
+    <div class="container">
+
+        <h2 class="page-title">Çalışan Yönetimi</h2>
+
+        <h:messages styleClass="messages" globalOnly="false"/>
+
+        <div class="toolbar">
+            <h:form id="toolbarForm">
+                <h:commandButton value="Yeni Ekle" action="#{employeeBean.prepareNew}" styleClass="btn btn-orange"/>
+                <h:commandButton value="Sil (formdaki)" action="#{employeeBean.deleteCurrent}" styleClass="btn btn-red"/>
+                <h:commandButton value="Yenile" action="#{employeeBean.refresh}" styleClass="btn btn-gray"/>
+            </h:form>
+        </div>
+
+        <div class="form-panel">
+            <h:form id="employeeForm">
+
+                <div class="form-grid">
+
+                    <h:outputLabel value="Ad:" for="firstName"/>
+                    <h:inputText id="firstName" value="#{employeeBean.employee.firstName}" required="true"
+                                 requiredMessage="Ad zorunludur."/>
+
+                    <h:outputLabel value="Soyad:" for="lastName"/>
+                    <h:inputText id="lastName" value="#{employeeBean.employee.lastName}" required="true"
+                                 requiredMessage="Soyad zorunludur."/>
+
+                    <h:outputLabel value="TC Kimlik No:" for="tcNo"/>
+                    <h:inputText id="tcNo" value="#{employeeBean.employee.tcNo}" maxlength="11"/>
+
+                    <h:outputLabel value="Firma:" for="companyId"/>
+                    <h:selectOneMenu id="companyId" value="#{employeeBean.companyId}" required="true"
+                                     requiredMessage="Firma seçilmelidir.">
+                        <f:selectItem itemLabel="— Firma seçin —"/>
+                        <f:selectItems value="#{employeeBean.companies}" var="c"
+                                       itemValue="#{c.id}" itemLabel="#{c.title}"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="Departman:" for="department"/>
+                    <h:inputText id="department" value="#{employeeBean.employee.department}"/>
+
+                    <h:outputLabel value="Görev:" for="jobTitle"/>
+                    <h:inputText id="jobTitle" value="#{employeeBean.employee.jobTitle}"/>
+
+                    <h:outputLabel value="Doğum Tarihi:" for="birthDate"/>
+                    <h:inputText id="birthDate" value="#{employeeBean.employee.birthDate}">
+                        <f:convertDateTime type="date" pattern="yyyy-MM-dd"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="İşe Giriş Tarihi:" for="startDate"/>
+                    <h:inputText id="startDate" value="#{employeeBean.employee.startDate}">
+                        <f:convertDateTime type="date" pattern="yyyy-MM-dd"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Telefon:" for="phone"/>
+                    <h:inputText id="phone" value="#{employeeBean.employee.phone}"/>
+
+                    <h:outputLabel value="E-Posta:" for="email"/>
+                    <h:inputText id="email" value="#{employeeBean.employee.email}"/>
+                </div>
+
+                <div class="button-area">
+                    <h:commandButton value="Kaydet"
+                                     action="#{employeeBean.createEmployee}"
+                                     styleClass="btn btn-orange"
+                                     rendered="#{employeeBean.employee.id == null}"/>
+
+                    <h:commandButton value="Güncelle"
+                                     action="#{employeeBean.updateEmployee}"
+                                     styleClass="btn"
+                                     rendered="#{employeeBean.employee.id != null}"/>
+
+                    <h:commandButton value="Temizle"
+                                     action="#{employeeBean.clearForm}"
+                                     styleClass="btn btn-gray"/>
+                </div>
+
+            </h:form>
+        </div>
+
+        <h3 class="page-title">Çalışan Listesi</h3>
+
+        <h:form id="employeeTableForm">
+
+            <h:dataTable value="#{employeeBean.employees}"
+                         var="e"
+                         styleClass="data-table">
+
+                <h:column>
+                    <f:facet name="header">Ad Soyad</f:facet>
+                    #{e.firstName} #{e.lastName}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">TC Kimlik No</f:facet>
+                    #{e.tcNo}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Firması</f:facet>
+                    #{e.company.title}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Departman</f:facet>
+                    #{e.department}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Görev</f:facet>
+                    #{e.jobTitle}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Telefon</f:facet>
+                    #{e.phone}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">İşlemler</f:facet>
+
+                    <h:commandButton value="Düzenle"
+                                     action="#{employeeBean.selectEmployee(e)}"
+                                     styleClass="btn"/>
+
+                    <h:commandButton value="Sil"
+                                     action="#{employeeBean.deleteEmployee(e)}"
+                                     styleClass="btn btn-red"/>
+                </h:column>
+
+            </h:dataTable>
+
+        </h:form>
+
+    </div>
+
+</h:body>
+</html>

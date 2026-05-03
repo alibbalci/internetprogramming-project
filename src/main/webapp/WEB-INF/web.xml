@@ -7,6 +7,11 @@
 
     <display-name>ISG Yonetim Jakarta</display-name>
 
+    <context-param>
+        <param-name>jakarta.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
     <!-- JSF / Jakarta Faces ana servlet -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
