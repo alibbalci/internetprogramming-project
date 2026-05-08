@@ -2,49 +2,55 @@ package bean;
 
 import entity.Institution;
 import facadeLocal.InstitutionFacadeLocal;
+import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
-@Named("institutionBean")
+@Named
 @SessionScoped
 public class InstitutionBean implements Serializable {
+
+    private Institution institution = new Institution();
 
     @EJB
     private InstitutionFacadeLocal institutionFacade;
 
-    private Institution institution = new Institution();
-
-    public void save() {
-        institutionFacade.create(institution);
-        institution = new Institution();
+    @PostConstruct
+    public void init() {
+        loadInstitution();
     }
 
-    public void update() {
-        institutionFacade.edit(institution);
-        institution = new Institution();
+    public void loadInstitution() {
+        List<Institution> institutions = institutionFacade.findAll();
+
+        if (institutions != null && !institutions.isEmpty()) {
+            institution = institutions.get(0);
+        } else {
+            institution = new Institution();
+        }
     }
 
-    public void delete(Institution selectedInstitution) {
-        institutionFacade.remove(selectedInstitution);
-        institution = new Institution();
-    }
+    public void saveOrUpdate() {
+        if (institution.getId() == null) {
+            institutionFacade.create(institution);
+        } else {
+            institutionFacade.edit(institution);
+        }
 
-    public void select(Institution selectedInstitution) {
-        this.institution = selectedInstitution;
+        loadInstitution();
     }
 
     public void clear() {
-        this.institution = new Institution();
-    }
-
-    public List<Institution> getList() {
-        return institutionFacade.findAll();
+        institution = new Institution();
     }
 
     public Institution getInstitution() {
+        if (institution == null) {
+            institution = new Institution();
+        }
         return institution;
     }
 

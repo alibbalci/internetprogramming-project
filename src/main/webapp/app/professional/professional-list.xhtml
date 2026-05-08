@@ -4,7 +4,7 @@
       xmlns:f="jakarta.faces.core">
 
 <h:head>
-    <title>Kurumsal Yönetim</title>
+    <title>Profesyoneller Yönetimi</title>
 
     <style>
         body {
@@ -35,7 +35,7 @@
             padding: 25px;
         }
 
-        .panel {
+        .form-panel {
             background-color: white;
             padding: 22px;
             border-radius: 7px;
@@ -47,15 +47,7 @@
             font-size: 25px;
             font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .section-subtitle {
-            font-size: 18px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-top: 10px;
-            margin-bottom: 16px;
+            margin-bottom: 22px;
         }
 
         .form-grid {
@@ -63,11 +55,6 @@
             grid-template-columns: 160px 1fr 160px 1fr;
             gap: 14px;
             align-items: center;
-        }
-
-        .form-grid.single {
-            grid-template-columns: 160px 1fr;
-            max-width: 760px;
         }
 
         .form-grid label {
@@ -85,8 +72,7 @@
         .button-row {
             display: flex;
             gap: 12px;
-            margin-top: 22px;
-            margin-bottom: 8px;
+            margin-top: 25px;
         }
 
         .btn {
@@ -116,7 +102,6 @@
             width: 100%;
             border-collapse: collapse;
             background-color: white;
-            margin-top: 12px;
         }
 
         .table th {
@@ -147,18 +132,6 @@
         .delete-btn {
             background-color: #8b2f2f;
         }
-
-        .info-text {
-            color: #607080;
-            font-size: 14px;
-            margin-bottom: 18px;
-        }
-
-        hr {
-            border: none;
-            border-top: 1px solid #d6dce2;
-            margin: 28px 0;
-        }
     </style>
 </h:head>
 
@@ -171,58 +144,9 @@
 
     <div class="container">
 
-        <div class="panel">
+        <div class="form-panel">
 
-            <div class="section-title">Kurumsal Yönetim</div>
-
-            <div class="section-subtitle">Kurum Bilgileri</div>
-
-            <div class="info-text">
-                Bu bölümde sistemi kullanan kurum / OSGB bilgisi tutulur. Kurum bilgisi tek kayıt olarak kaydedilir.
-            </div>
-
-            <h:form id="institutionForm">
-
-                <div class="form-grid single">
-
-                    <h:outputLabel value="Kurum Adı:" for="institutionName"/>
-                    <h:inputText id="institutionName"
-                                 value="#{institutionBean.institution.name}"
-                                 styleClass="input"/>
-
-                    <h:outputLabel value="Adres:" for="institutionAddress"/>
-                    <h:inputText id="institutionAddress"
-                                 value="#{institutionBean.institution.address}"
-                                 styleClass="input"/>
-
-                    <h:outputLabel value="Telefon:" for="institutionPhone"/>
-                    <h:inputText id="institutionPhone"
-                                 value="#{institutionBean.institution.phone}"
-                                 styleClass="input"/>
-
-                </div>
-
-                <div class="button-row">
-
-                    <h:commandButton value="Kaydet / Güncelle"
-                                     action="#{institutionBean.saveOrUpdate}"
-                                     styleClass="btn btn-orange"/>
-
-                    <h:commandButton value="Temizle"
-                                     action="#{institutionBean.clear}"
-                                     styleClass="btn btn-gray"/>
-
-                </div>
-
-            </h:form>
-
-            <hr/>
-
-            <div class="section-subtitle">Profesyoneller</div>
-
-            <div class="info-text">
-                Bu bölümde kuruma bağlı iş güvenliği uzmanı, işyeri hekimi ve diğer sağlık personeli kayıtları tutulur.
-            </div>
+            <div class="section-title">Profesyoneller Yönetimi</div>
 
             <h:form id="professionalForm">
 
@@ -253,8 +177,8 @@
                                  value="#{professionalBean.professional.certificateNo}"
                                  styleClass="input"/>
 
-                    <h:outputLabel value="Telefon:" for="professionalPhone"/>
-                    <h:inputText id="professionalPhone"
+                    <h:outputLabel value="Telefon:" for="phone"/>
+                    <h:inputText id="phone"
                                  value="#{professionalBean.professional.phone}"
                                  styleClass="input"/>
 
@@ -283,64 +207,64 @@
 
             </h:form>
 
-            <h:form id="professionalTableForm">
-
-                <h:dataTable value="#{professionalBean.professionals}"
-                             var="p"
-                             styleClass="table">
-
-                    <h:column>
-                        <f:facet name="header">Ad</f:facet>
-                        <h:outputText value="#{p.firstName}"/>
-                    </h:column>
-
-                    <h:column>
-                        <f:facet name="header">Soyad</f:facet>
-                        <h:outputText value="#{p.lastName}"/>
-                    </h:column>
-
-                    <h:column>
-                        <f:facet name="header">TC No</f:facet>
-                        <h:outputText value="#{p.tcNo}"/>
-                    </h:column>
-
-                    <h:column>
-                        <f:facet name="header">Meslek Türü</f:facet>
-                        <h:outputText value="#{p.professionType}"/>
-                    </h:column>
-
-                    <h:column>
-                        <f:facet name="header">Belge No</f:facet>
-                        <h:outputText value="#{p.certificateNo}"/>
-                    </h:column>
-
-                    <h:column>
-                        <f:facet name="header">Telefon</f:facet>
-                        <h:outputText value="#{p.phone}"/>
-                    </h:column>
-
-                    <h:column>
-                        <f:facet name="header">E-Posta</f:facet>
-                        <h:outputText value="#{p.email}"/>
-                    </h:column>
-
-                    <h:column>
-                        <f:facet name="header">İşlemler</f:facet>
-
-                        <h:commandButton value="Seç"
-                                         action="#{professionalBean.selectProfessional(p)}"
-                                         styleClass="small-btn"/>
-
-                        <h:commandButton value="Sil"
-                                         action="#{professionalBean.deleteProfessional(p)}"
-                                         styleClass="small-btn delete-btn"/>
-                    </h:column>
-
-                </h:dataTable>
-
-            </h:form>
-
         </div>
+
+        <h:form id="professionalTableForm">
+
+            <h:dataTable value="#{professionalBean.professionals}"
+                         var="p"
+                         styleClass="table">
+
+                <h:column>
+                    <f:facet name="header">Ad</f:facet>
+                    <h:outputText value="#{p.firstName}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Soyad</f:facet>
+                    <h:outputText value="#{p.lastName}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">TC No</f:facet>
+                    <h:outputText value="#{p.tcNo}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Meslek Türü</f:facet>
+                    <h:outputText value="#{p.professionType}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Belge No</f:facet>
+                    <h:outputText value="#{p.certificateNo}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Telefon</f:facet>
+                    <h:outputText value="#{p.phone}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">E-Posta</f:facet>
+                    <h:outputText value="#{p.email}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">İşlemler</f:facet>
+
+                    <h:commandButton value="Seç"
+                                     action="#{professionalBean.selectProfessional(p)}"
+                                     styleClass="small-btn"/>
+
+                    <h:commandButton value="Sil"
+                                     action="#{professionalBean.deleteProfessional(p)}"
+                                     styleClass="small-btn delete-btn"/>
+                </h:column>
+
+            </h:dataTable>
+
+        </h:form>
 
     </div>
 

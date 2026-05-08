@@ -11,10 +11,12 @@ public class Institution implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="osgb_title")
-    private String osgbTitle;
+    private String name;
 
+    @Column(length = 500)
     private String address;
+
+    private String phone;
 
     public Institution() {
     }
@@ -27,12 +29,12 @@ public class Institution implements Serializable {
         this.id = id;
     }
 
-    public String getOsgbTitle() {
-        return osgbTitle;
+    public String getName() {
+        return name;
     }
 
-    public void setOsgbTitle(String osgbTitle) {
-        this.osgbTitle = osgbTitle;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -41,5 +43,13 @@ public class Institution implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
