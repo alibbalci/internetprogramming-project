@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Firma Yönetimi</title>
+    <h:outputStylesheet library="css" name="company-list.css"/>
+</h:head>
+
+<h:body>
+
+    <div class="topbar">
+        İSG Yönetim Sistemi
+        <h:link value="Panele Dön" outcome="/panel/index.xhtml" styleClass="back-link"/>
+    </div>
+
+    <div class="container">
+
+        <h2 class="page-title">Firma Yönetimi</h2>
+
+        <div class="form-panel">
+            <h:form id="companyForm">
+
+                <div class="form-grid">
+
+                    <h:outputLabel value="Ünvan:" for="title"/>
+                    <h:inputText id="title" value="#{companyBean.company.title}"/>
+
+                    <h:outputLabel value="SGK Sicil No:" for="sgkNumber"/>
+                    <h:inputText id="sgkNumber" value="#{companyBean.company.sgkNumber}"/>
+
+                    <h:outputLabel value="NACE Kodu:" for="naceCode"/>
+                    <h:inputText id="naceCode" value="#{companyBean.company.naceCode}"/>
+
+                    <h:outputLabel value="İş Kolu:" for="businessLine"/>
+                    <h:inputText id="businessLine" value="#{companyBean.company.businessLine}"/>
+
+                    <h:outputLabel value="Tehlike Sınıfı:" for="hazardClass"/>
+                    <h:inputText id="hazardClass" value="#{companyBean.company.hazardClass}"/>
+
+                    <h:outputLabel value="SGK Sicil Adresi:" for="sgkAddress"/>
+                    <h:inputText id="sgkAddress" value="#{companyBean.company.sgkAddress}"/>
+
+                    <h:outputLabel value="Yetkili Kişi:" for="authorizedPerson"/>
+                    <h:inputText id="authorizedPerson" value="#{companyBean.company.authorizedPerson}"/>
+
+                    <h:outputLabel value="Telefon:" for="phone"/>
+                    <h:inputText id="phone" value="#{companyBean.company.phone}"/>
+
+                    <h:outputLabel value="E-Posta:" for="email"/>
+                    <h:inputText id="email" value="#{companyBean.company.email}"/>
+
+                </div>
+
+                <div class="button-area">
+                    <h:commandButton value="Kaydet"
+                                     action="#{companyBean.createCompany}"
+                                     styleClass="btn btn-orange"/>
+
+                    <h:commandButton value="Güncelle"
+                                     action="#{companyBean.updateCompany}"
+                                     styleClass="btn"/>
+
+                    <h:commandButton value="Temizle"
+                                     action="#{companyBean.clearForm}"
+                                     styleClass="btn btn-gray"/>
+                </div>
+
+            </h:form>
+        </div>
+
+        <h3 class="page-title">Firma Listesi</h3>
+
+        <h:form id="companyTableForm">
+
+            <h:dataTable value="#{companyBean.companies}"
+                         var="c"
+                         styleClass="data-table">
+
+                <h:column>
+                    <f:facet name="header">Ünvan</f:facet>
+                    #{c.title}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">SGK Sicil No</f:facet>
+                    #{c.sgkNumber}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">NACE Kodu</f:facet>
+                    #{c.naceCode}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">İş Kolu</f:facet>
+                    #{c.businessLine}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Tehlike Sınıfı</f:facet>
+                    #{c.hazardClass}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Yetkili</f:facet>
+                    #{c.authorizedPerson}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Telefon</f:facet>
+                    #{c.phone}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">E-Posta</f:facet>
+                    #{c.email}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">İşlemler</f:facet>
+
+                    <h:commandButton value="Düzenle"
+                                     action="#{companyBean.selectCompany(c)}"
+                                     styleClass="btn"/>
+
+                    <h:commandButton value="Sil"
+                                     action="#{companyBean.deleteCompany(c)}"
+                                     styleClass="btn btn-red"/>
+                </h:column>
+
+            </h:dataTable>
+
+        </h:form>
+
+    </div>
+
+</h:body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Profesyoneller Yönetimi</title>
+    <h:outputStylesheet library="css" name="professional-list.css"/>
+</h:head>
+
+<h:body>
+
+    <div class="topbar">
+        İSG Yönetim Sistemi
+        <a href="#{request.contextPath}/panel/index.xhtml">Panele Dön</a>
+    </div>
+
+    <div class="container">
+
+        <div class="form-panel">
+
+            <div class="section-title">Profesyoneller Yönetimi</div>
+
+            <h:form id="professionalForm">
+
+                <div class="form-grid">
+
+                    <h:outputLabel value="Ad:" for="firstName"/>
+                    <h:inputText id="firstName"
+                                 value="#{professionalBean.professional.firstName}"
+                                 styleClass="input"/>
+
+                    <h:outputLabel value="Soyad:" for="lastName"/>
+                    <h:inputText id="lastName"
+                                 value="#{professionalBean.professional.lastName}"
+                                 styleClass="input"/>
+
+                    <h:outputLabel value="TC No:" for="tcNo"/>
+                    <h:inputText id="tcNo"
+                                 value="#{professionalBean.professional.tcNo}"
+                                 styleClass="input"/>
+
+                    <h:outputLabel value="Meslek Türü:" for="professionType"/>
+                    <h:inputText id="professionType"
+                                 value="#{professionalBean.professional.professionType}"
+                                 styleClass="input"/>
+
+                    <h:outputLabel value="Belge No:" for="certificateNo"/>
+                    <h:inputText id="certificateNo"
+                                 value="#{professionalBean.professional.certificateNo}"
+                                 styleClass="input"/>
+
+                    <h:outputLabel value="Telefon:" for="phone"/>
+                    <h:inputText id="phone"
+                                 value="#{professionalBean.professional.phone}"
+                                 styleClass="input"/>
+
+                    <h:outputLabel value="E-Posta:" for="email"/>
+                    <h:inputText id="email"
+                                 value="#{professionalBean.professional.email}"
+                                 styleClass="input"/>
+
+                </div>
+
+                <div class="button-row">
+
+                    <h:commandButton value="Kaydet"
+                                     action="#{professionalBean.createProfessional}"
+                                     styleClass="btn btn-orange"/>
+
+                    <h:commandButton value="Güncelle"
+                                     action="#{professionalBean.updateProfessional}"
+                                     styleClass="btn"/>
+
+                    <h:commandButton value="Temizle"
+                                     action="#{professionalBean.clearForm}"
+                                     styleClass="btn btn-gray"/>
+
+                </div>
+
+            </h:form>
+
+        </div>
+
+        <h:form id="professionalTableForm">
+
+            <h:dataTable value="#{professionalBean.professionals}"
+                         var="p"
+                         styleClass="table">
+
+                <h:column>
+                    <f:facet name="header">Ad</f:facet>
+                    <h:outputText value="#{p.firstName}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Soyad</f:facet>
+                    <h:outputText value="#{p.lastName}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">TC No</f:facet>
+                    <h:outputText value="#{p.tcNo}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Meslek Türü</f:facet>
+                    <h:outputText value="#{p.professionType}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Belge No</f:facet>
+                    <h:outputText value="#{p.certificateNo}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Telefon</f:facet>
+                    <h:outputText value="#{p.phone}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">E-Posta</f:facet>
+                    <h:outputText value="#{p.email}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">İşlemler</f:facet>
+
+                    <h:commandButton value="Seç"
+                                     action="#{professionalBean.selectProfessional(p)}"
+                                     styleClass="small-btn"/>
+
+                    <h:commandButton value="Sil"
+                                     action="#{professionalBean.deleteProfessional(p)}"
+                                     styleClass="small-btn delete-btn"/>
+                </h:column>
+
+            </h:dataTable>
+
+        </h:form>
+
+    </div>
+
+</h:body>
+</html>

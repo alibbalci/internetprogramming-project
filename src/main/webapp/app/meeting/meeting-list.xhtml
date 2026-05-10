@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Toplantı Yönetimi</title>
+    <h:outputStylesheet library="css" name="meeting-list.css"/>
+</h:head>
+
+<h:body>
+
+    <div class="topbar">
+        İSG Yönetim Sistemi
+        <h:link value="Panele Dön" outcome="/panel/index.xhtml" styleClass="back-link"/>
+    </div>
+
+    <div class="container">
+
+        <h2 class="page-title">Toplantı Ekle</h2>
+
+        <div class="form-panel">
+            <h:form id="meetingForm">
+
+                <div class="form-grid">
+
+                    <h:outputLabel value="Toplantı Tarihi:" for="meetingDate"/>
+                    <h:inputText id="meetingDate" value="#{meetingBean.meeting.meetingDate}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Toplantı Saati (SS.DD):" for="meetingTime"/>
+                    <h:inputText id="meetingTime" value="#{meetingBean.meeting.meetingTime}"/>
+
+                    <h:outputLabel value="Gündem:" for="agenda"/>
+                    <h:inputTextarea id="agenda" value="#{meetingBean.meeting.agenda}" rows="5"/>
+
+                    <h:outputLabel value="Alınan Kararlar:" for="decisions"/>
+                    <h:inputTextarea id="decisions" value="#{meetingBean.meeting.decisions}" rows="5"/>
+
+                </div>
+
+                <div class="button-area">
+                    <h:commandButton value="Kaydet"
+                                     action="#{meetingBean.createMeeting}"
+                                     styleClass="btn btn-green"/>
+
+                    <h:commandButton value="Güncelle"
+                                     action="#{meetingBean.updateMeeting}"
+                                     styleClass="btn"/>
+
+                    <h:commandButton value="Temizle"
+                                     action="#{meetingBean.clearForm}"
+                                     styleClass="btn btn-gray"/>
+                </div>
+
+            </h:form>
+        </div>
+
+        <h3 class="page-title">Toplantı Listesi</h3>
+
+        <h:form id="meetingTableForm">
+
+            <h:dataTable value="#{meetingBean.meetings}"
+                         var="m"
+                         styleClass="data-table">
+
+                <h:column>
+                    <f:facet name="header">Tarih</f:facet>
+                    <h:outputText value="#{m.meetingDate}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Saat</f:facet>
+                    #{m.meetingTime}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Gündem</f:facet>
+                    <h:outputText value="#{m.agenda.length() > 50 ? m.agenda.substring(0, 50).concat('...') : m.agenda}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">İşlemler</f:facet>
+
+                    <h:commandButton value="Düzenle"
+                                     action="#{meetingBean.selectMeeting(m)}"
+                                     styleClass="btn"/>
+
+                    <h:commandButton value="Sil"
+                                     action="#{meetingBean.deleteMeeting(m)}"
+                                     styleClass="btn btn-red"/>
+                </h:column>
+
+            </h:dataTable>
+
+        </h:form>
+
+    </div>
+
+</h:body>
+</html>

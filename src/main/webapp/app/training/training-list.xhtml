@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Eğitim Yönetimi</title>
+    <h:outputStylesheet library="css" name="training-list.css"/>
+</h:head>
+
+<h:body>
+
+    <div class="topbar">
+        İSG Yönetim Sistemi
+        <h:link value="Panele Dön" outcome="/panel/index.xhtml" styleClass="back-link"/>
+    </div>
+
+    <div class="container">
+
+        <h2 class="page-title">Eğitim Ekle</h2>
+
+        <div class="form-panel">
+            <h:form id="trainingForm">
+
+                <div class="form-grid">
+
+                    <h:outputLabel value="Firma Ünvanı:" for="company"/>
+                    <h:selectOneMenu id="company" value="#{trainingBean.training.company}" converter="#{companyConverter}">
+                        <f:selectItem itemLabel="Firma Seçiniz" itemValue="#{null}"/>
+                        <f:selectItems value="#{companyBean.companies}" var="c" 
+                                       itemLabel="#{c.title}" itemValue="#{c}"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="Eğitim Başlangıç Tarihi:" for="startDate"/>
+                    <h:inputText id="startDate" value="#{trainingBean.training.startDate}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Eğitim Bitiş Tarihi:" for="endDate"/>
+                    <h:inputText id="endDate" value="#{trainingBean.training.endDate}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Eğitim Türü:" for="trainingType"/>
+                    <h:selectOneMenu id="trainingType" value="#{trainingBean.training.trainingType}">
+                        <f:selectItem itemLabel="Seçiniz" itemValue=""/>
+                        <f:selectItem itemLabel="Temel Eğitim" itemValue="Temel Eğitim"/>
+                        <f:selectItem itemLabel="Yenileme Eğitimi" itemValue="Yenileme Eğitimi"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="Eğitim Konuları:"/>
+                    <h:panelGroup styleClass="checkbox-group">
+                        <h:selectBooleanCheckbox id="general" value="#{trainingBean.training.generalSubjects}"/>
+                        <h:outputLabel value="Genel Konular" for="general"/>
+                        
+                        <h:selectBooleanCheckbox id="health" value="#{trainingBean.training.healthSubjects}"/>
+                        <h:outputLabel value="Sağlık Konuları" for="health"/>
+                        
+                        <h:selectBooleanCheckbox id="technical" value="#{trainingBean.training.technicalSubjects}"/>
+                        <h:outputLabel value="Teknik Konular" for="technical"/>
+                    </h:panelGroup>
+
+                </div>
+
+                <div class="button-area">
+                    <h:commandButton value="Kaydet"
+                                     action="#{trainingBean.createTraining}"
+                                     styleClass="btn btn-orange"/>
+
+                    <h:commandButton value="Güncelle"
+                                     action="#{trainingBean.updateTraining}"
+                                     styleClass="btn"/>
+
+                    <h:commandButton value="Temizle"
+                                     action="#{trainingBean.clearForm}"
+                                     styleClass="btn btn-gray"/>
+                </div>
+
+            </h:form>
+        </div>
+
+        <h3 class="page-title">Eğitim Listesi</h3>
+
+        <h:form id="trainingTableForm">
+
+            <h:dataTable value="#{trainingBean.trainings}"
+                         var="t"
+                         styleClass="data-table">
+
+                <h:column>
+                    <f:facet name="header">Firma</f:facet>
+                    #{t.company.title}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Başlangıç</f:facet>
+                    <h:outputText value="#{t.startDate}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Bitiş</f:facet>
+                    <h:outputText value="#{t.endDate}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Tür</f:facet>
+                    #{t.trainingType}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">İşlemler</f:facet>
+
+                    <h:commandButton value="Düzenle"
+                                     action="#{trainingBean.selectTraining(t)}"
+                                     styleClass="btn"/>
+
+                    <h:commandButton value="Sil"
+                                     action="#{trainingBean.deleteTraining(t)}"
+                                     styleClass="btn btn-red"/>
+                </h:column>
+
+            </h:dataTable>
+
+        </h:form>
+
+    </div>
+
+</h:body>
+</html>
