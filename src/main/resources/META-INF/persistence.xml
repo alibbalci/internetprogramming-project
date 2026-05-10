@@ -12,6 +12,7 @@
         <class>entity.Institution</class>
         <class>entity.Employee</class>
         <class>entity.Professional</class>
+        <class>entity.Users</class>
 
         <properties>
             <property name="eclipselink.logging.level" value="FINE"/>

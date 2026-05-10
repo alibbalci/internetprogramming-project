@@ -27,7 +27,7 @@
 
     <!-- Ana giriş sayfası -->
     <welcome-file-list>
-        <welcome-file>panel/index.xhtml</welcome-file>
+        <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
 
 </web-app>

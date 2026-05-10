@@ -2,6 +2,8 @@ package entity;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "institution")
@@ -17,6 +19,9 @@ public class Institution implements Serializable {
     private String address;
 
     private String phone;
+
+    @OneToMany(mappedBy = "institution")
+    private List<Professional> professionals = new ArrayList<>();
 
     public Institution() {
     }
@@ -51,5 +56,13 @@ public class Institution implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<Professional> getProfessionals() {
+        return professionals;
+    }
+
+    public void setProfessionals(List<Professional> professionals) {
+        this.professionals = professionals;
     }
 }

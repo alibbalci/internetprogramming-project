@@ -30,6 +30,10 @@ public class Professional implements Serializable {
 
     private String email;
 
+    @ManyToOne
+    @JoinColumn(name = "institution_id")
+    private Institution institution;
+
     public Professional() {
     }
 
@@ -95,5 +99,13 @@ public class Professional implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
     }
 }

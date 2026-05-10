@@ -90,14 +90,13 @@ Bu proje ticari bir uygulama değildir. Ders kapsamında Jakarta EE, JSF, XHTML 
 ## Geliştirme Planı
 
 - [X] Proje temel klasör yapısının oluşturulması
-- [ ] Panel giriş sayfasının hazırlanması
-- [ ] Firma yönetim sayfasının hazırlanması
-- [ ] Firma ekleme işlemi
-- [ ] Firma listeleme işlemi
-- [ ] Firma güncelleme işlemi
-- [ ] Firma silme işlemi
-- [ ] Kurumsal yönetim sayfasının eklenmesi
-- [ ] Arayüz tasarımının iyileştirilmesi
+- [X] Firma yönetim sayfasının hazırlanması
+- [X] Firma ekleme işlemi
+- [X] Firma listeleme işlemi
+- [X] Firma güncelleme işlemi
+- [X] Firma silme işlemi
+- [X] Kurumsal yönetim sayfasının eklenmesi
+- [X] Arayüz tasarımının iyileştirilmesi
 
 ## Not
 

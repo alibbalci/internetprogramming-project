@@ -39,6 +39,8 @@
     </dependencies>
 
     <build>
+        <finalName>isg-yonetim-jakarta</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
