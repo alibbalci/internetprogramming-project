@@ -3,13 +3,13 @@ package bean;
 import entity.Meeting;
 import facadeLocal.MeetingFacadeLocal;
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class MeetingBean implements Serializable {
 
     private Meeting meeting = new Meeting();

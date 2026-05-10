@@ -4,13 +4,13 @@ import entity.Institution;
 import facadeLocal.InstitutionFacadeLocal;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class InstitutionBean implements Serializable {
 
     private Institution institution = new Institution();

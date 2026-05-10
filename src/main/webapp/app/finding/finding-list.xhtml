@@ -1,0 +1,132 @@
+<ui:composition template="/template.xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core">
+
+    <ui:define name="title">Tespit ve Öneri Yönetimi</ui:define>
+
+    <ui:define name="styles">
+        <h:outputStylesheet library="css" name="finding-list.css"/>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h2 class="page-title">Tespit ve Öneri Ekle</h2>
+
+        <h:messages styleClass="alert alert-danger" globalOnly="false"/>
+
+        <div class="card mb-4">
+            <div class="card-body">
+            <h:form id="findingForm">
+
+                <div class="row g-3">
+
+                    <div class="col-md-3">
+                    <h:outputLabel value="Firma Adı:" for="company" styleClass="form-label"/>
+                    <h:selectOneMenu id="company"
+                                     value="#{findingRecommendationBean.companyId}"
+                                     required="true"
+                                     styleClass="form-select"
+                                     requiredMessage="Firma seçilmelidir.">
+                        <f:selectItem itemLabel="Firma Seçiniz" itemValue="#{null}"/>
+                        <f:selectItems value="#{findingRecommendationBean.companies}"
+                                       var="c"
+                                       itemLabel="#{c.title}"
+                                       itemValue="#{c.id}"/>
+                    </h:selectOneMenu>
+                    </div>
+
+                    <div class="col-md-3">
+                    <h:outputLabel value="Tespit Tarihi:" for="findingDate" styleClass="form-label"/>
+                    <h:inputText id="findingDate"
+                                 value="#{findingRecommendationBean.findingRecommendation.findingDate}"
+                                 styleClass="form-control">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:inputText>
+                    </div>
+
+                    <div class="col-12">
+                    <h:outputLabel value="Tespit:" for="finding" styleClass="form-label"/>
+                    <h:inputTextarea id="finding"
+                                     value="#{findingRecommendationBean.findingRecommendation.finding}"
+                                     styleClass="form-control"
+                                     rows="5"/>
+                    </div>
+
+                    <div class="col-12">
+                    <h:outputLabel value="Öneri:" for="recommendation" styleClass="form-label"/>
+                    <h:inputTextarea id="recommendation"
+                                     value="#{findingRecommendationBean.findingRecommendation.recommendation}"
+                                     styleClass="form-control"
+                                     rows="5"/>
+                    </div>
+
+                </div>
+
+                <div class="mt-3">
+                    <h:commandButton value="Kaydet"
+                                     action="#{findingRecommendationBean.createFindingRecommendation}"
+                                     styleClass="btn btn-warning me-2"/>
+
+                    <h:commandButton value="Güncelle"
+                                     action="#{findingRecommendationBean.updateFindingRecommendation}"
+                                     styleClass="btn btn-primary me-2"/>
+
+                    <h:commandButton value="Temizle"
+                                     action="#{findingRecommendationBean.clearForm}"
+                                     styleClass="btn btn-secondary"/>
+                </div>
+
+            </h:form>
+            </div>
+        </div>
+
+        <h3 class="page-title">Tespit ve Öneri Listesi</h3>
+
+        <h:form id="findingTableForm">
+
+            <h:dataTable value="#{findingRecommendationBean.findingRecommendations}"
+                         var="item"
+                         styleClass="table table-bordered table-striped table-hover align-middle">
+
+                <h:column>
+                    <f:facet name="header">Firma</f:facet>
+                    #{item.company.title}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Tarih</f:facet>
+                    <h:outputText value="#{item.findingDate}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Tespit</f:facet>
+                    <h:outputText value="#{item.finding != null and item.finding.length() > 60 ? item.finding.substring(0, 60).concat('...') : item.finding}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Öneri</f:facet>
+                    <h:outputText value="#{item.recommendation != null and item.recommendation.length() > 60 ? item.recommendation.substring(0, 60).concat('...') : item.recommendation}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">İşlemler</f:facet>
+
+                    <h:commandButton value="Düzenle"
+                                     action="#{findingRecommendationBean.selectFindingRecommendation(item)}"
+                                     styleClass="btn btn-sm btn-primary me-2"/>
+
+                    <h:commandButton value="Sil"
+                                     action="#{findingRecommendationBean.deleteFindingRecommendation(item)}"
+                                     styleClass="btn btn-sm btn-danger"/>
+                </h:column>
+
+            </h:dataTable>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

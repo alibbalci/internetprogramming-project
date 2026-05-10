@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core">
+<ui:composition template="/template.xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core">
 
-<h:head>
-    <title>Toplantı Yönetimi</title>
-    <h:outputStylesheet library="css" name="meeting-list.css"/>
-</h:head>
+    <ui:define name="title">Toplantı Yönetimi</ui:define>
 
-<h:body>
+    <ui:define name="styles">
+        <h:outputStylesheet library="css" name="meeting-list.css"/>
+    </ui:define>
 
-    <div class="topbar">
-        İSG Yönetim Sistemi
-        <h:link value="Panele Dön" outcome="/panel/index.xhtml" styleClass="back-link"/>
-    </div>
-
-    <div class="container">
+    <ui:define name="content">
 
         <h2 class="page-title">Toplantı Ekle</h2>
 
@@ -43,15 +37,15 @@
                 <div class="button-area">
                     <h:commandButton value="Kaydet"
                                      action="#{meetingBean.createMeeting}"
-                                     styleClass="btn btn-green"/>
+                                     styleClass="btn btn-success me-2"/>
 
                     <h:commandButton value="Güncelle"
                                      action="#{meetingBean.updateMeeting}"
-                                     styleClass="btn"/>
+                                     styleClass="btn btn-primary me-2"/>
 
                     <h:commandButton value="Temizle"
                                      action="#{meetingBean.clearForm}"
-                                     styleClass="btn btn-gray"/>
+                                     styleClass="btn btn-secondary me-2"/>
                 </div>
 
             </h:form>
@@ -63,7 +57,7 @@
 
             <h:dataTable value="#{meetingBean.meetings}"
                          var="m"
-                         styleClass="data-table">
+                         styleClass="table table-bordered table-striped table-hover align-middle">
 
                 <h:column>
                     <f:facet name="header">Tarih</f:facet>
@@ -79,7 +73,7 @@
 
                 <h:column>
                     <f:facet name="header">Gündem</f:facet>
-                    <h:outputText value="#{m.agenda.length() > 50 ? m.agenda.substring(0, 50).concat('...') : m.agenda}"/>
+                    <h:outputText value="#{m.agenda != null and m.agenda.length() > 50 ? m.agenda.substring(0, 50).concat('...') : m.agenda}"/>
                 </h:column>
 
                 <h:column>
@@ -87,18 +81,17 @@
 
                     <h:commandButton value="Düzenle"
                                      action="#{meetingBean.selectMeeting(m)}"
-                                     styleClass="btn"/>
+                                     styleClass="btn btn-primary me-2"/>
 
                     <h:commandButton value="Sil"
                                      action="#{meetingBean.deleteMeeting(m)}"
-                                     styleClass="btn btn-red"/>
+                                     styleClass="btn btn-danger me-2"/>
                 </h:column>
 
             </h:dataTable>
 
         </h:form>
 
-    </div>
+    </ui:define>
 
-</h:body>
-</html>
+</ui:composition>

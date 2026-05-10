@@ -1,25 +1,26 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core">
+<ui:composition template="/template.xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core">
 
-<h:head>
-    <title>Kurumsal Yönetim</title>
-    <h:outputStylesheet library="css" name="institution-list.css"/>
-</h:head>
+    <ui:define name="title">Kurumsal Yönetim</ui:define>
 
-<h:body>
+    <ui:define name="styles">
+        <h:outputStylesheet library="css" name="institution-list.css"/>
+    </ui:define>
 
-    <div class="topbar">
-        İSG Yönetim Sistemi
-        <a href="#{request.contextPath}/panel/index.xhtml">Panele Dön</a>
-    </div>
-
-    <div class="container">
+    <ui:define name="content">
 
         <div class="panel">
 
-            <div class="section-title">Kurumsal Yönetim</div>
+            <div class="panel-header" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px;">
+                <div class="section-title">Kurumsal Yönetim</div>
+                <a href="#{request.contextPath}/app/meeting/meeting-list.xhtml"
+                   class="btn btn-warning"
+                   style="display: inline-block; color: white; text-decoration: none; padding: 10px 24px; border-radius: 7px; font-size: 14px; font-weight: bold;">
+                    Toplantı Yönetimine Git
+                </a>
+            </div>
 
             <div class="section-subtitle">Kurum Bilgileri</div>
 
@@ -34,17 +35,17 @@
                     <h:outputLabel value="Kurum Adı:" for="institutionName"/>
                     <h:inputText id="institutionName"
                                  value="#{institutionBean.institution.name}"
-                                 styleClass="input"/>
+                                 styleClass="form-control"/>
 
                     <h:outputLabel value="Adres:" for="institutionAddress"/>
                     <h:inputText id="institutionAddress"
                                  value="#{institutionBean.institution.address}"
-                                 styleClass="input"/>
+                                 styleClass="form-control"/>
 
                     <h:outputLabel value="Telefon:" for="institutionPhone"/>
                     <h:inputText id="institutionPhone"
                                  value="#{institutionBean.institution.phone}"
-                                 styleClass="input"/>
+                                 styleClass="form-control"/>
 
                 </div>
 
@@ -52,11 +53,11 @@
 
                     <h:commandButton value="Kaydet / Güncelle"
                                      action="#{institutionBean.saveOrUpdate}"
-                                     styleClass="btn btn-orange"/>
+                                     styleClass="btn btn-warning me-2"/>
 
                     <h:commandButton value="Temizle"
                                      action="#{institutionBean.clear}"
-                                     styleClass="btn btn-gray"/>
+                                     styleClass="btn btn-secondary me-2"/>
 
                 </div>
 
@@ -77,37 +78,37 @@
                     <h:outputLabel value="Ad:" for="firstName"/>
                     <h:inputText id="firstName"
                                  value="#{professionalBean.professional.firstName}"
-                                 styleClass="input"/>
+                                 styleClass="form-control"/>
 
                     <h:outputLabel value="Soyad:" for="lastName"/>
                     <h:inputText id="lastName"
                                  value="#{professionalBean.professional.lastName}"
-                                 styleClass="input"/>
+                                 styleClass="form-control"/>
 
                     <h:outputLabel value="TC No:" for="tcNo"/>
                     <h:inputText id="tcNo"
                                  value="#{professionalBean.professional.tcNo}"
-                                 styleClass="input"/>
+                                 styleClass="form-control"/>
 
                     <h:outputLabel value="Meslek Türü:" for="professionType"/>
                     <h:inputText id="professionType"
                                  value="#{professionalBean.professional.professionType}"
-                                 styleClass="input"/>
+                                 styleClass="form-control"/>
 
                     <h:outputLabel value="Belge No:" for="certificateNo"/>
                     <h:inputText id="certificateNo"
                                  value="#{professionalBean.professional.certificateNo}"
-                                 styleClass="input"/>
+                                 styleClass="form-control"/>
 
                     <h:outputLabel value="Telefon:" for="professionalPhone"/>
                     <h:inputText id="professionalPhone"
                                  value="#{professionalBean.professional.phone}"
-                                 styleClass="input"/>
+                                 styleClass="form-control"/>
 
                     <h:outputLabel value="E-Posta:" for="email"/>
                     <h:inputText id="email"
                                  value="#{professionalBean.professional.email}"
-                                 styleClass="input"/>
+                                 styleClass="form-control"/>
 
                 </div>
 
@@ -115,15 +116,15 @@
 
                     <h:commandButton value="Kaydet"
                                      action="#{professionalBean.createProfessional}"
-                                     styleClass="btn btn-orange"/>
+                                     styleClass="btn btn-warning me-2"/>
 
                     <h:commandButton value="Güncelle"
                                      action="#{professionalBean.updateProfessional}"
-                                     styleClass="btn"/>
+                                     styleClass="btn btn-primary me-2"/>
 
                     <h:commandButton value="Temizle"
                                      action="#{professionalBean.clearForm}"
-                                     styleClass="btn btn-gray"/>
+                                     styleClass="btn btn-secondary me-2"/>
 
                 </div>
 
@@ -133,7 +134,7 @@
 
                 <h:dataTable value="#{professionalBean.professionals}"
                              var="p"
-                             styleClass="table">
+                             styleClass="table table-bordered table-striped table-hover align-middle">
 
                     <h:column>
                         <f:facet name="header">Ad</f:facet>
@@ -175,11 +176,11 @@
 
                         <h:commandButton value="Seç"
                                          action="#{professionalBean.selectProfessional(p)}"
-                                         styleClass="small-btn"/>
+                                         styleClass="btn btn-sm btn-primary me-2"/>
 
                         <h:commandButton value="Sil"
                                          action="#{professionalBean.deleteProfessional(p)}"
-                                         styleClass="small-btn delete-btn"/>
+                                         styleClass="btn btn-sm btn-danger"/>
                     </h:column>
 
                 </h:dataTable>
@@ -188,7 +189,6 @@
 
         </div>
 
-    </div>
+    </ui:define>
 
-</h:body>
-</html>
+</ui:composition>

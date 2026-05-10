@@ -1,31 +1,25 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core">
+<ui:composition template="/template.xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core">
 
-<h:head>
-    <title>Çalışan Yönetimi</title>
-    <h:outputStylesheet library="css" name="employee-list.css"/>
-</h:head>
+    <ui:define name="title">Çalışan Yönetimi</ui:define>
 
-<h:body>
+    <ui:define name="styles">
+        <h:outputStylesheet library="css" name="employee-list.css"/>
+    </ui:define>
 
-    <div class="topbar">
-        İSG Yönetim Sistemi
-        <h:link value="Panele Dön" outcome="/panel/index.xhtml" styleClass="back-link"/>
-    </div>
-
-    <div class="container">
+    <ui:define name="content">
 
         <h2 class="page-title">Çalışan Yönetimi</h2>
 
-        <h:messages styleClass="messages" globalOnly="false"/>
+        <h:messages styleClass="alert alert-danger" globalOnly="false"/>
 
         <div class="toolbar">
             <h:form id="toolbarForm">
-                <h:commandButton value="Yeni Ekle" action="#{employeeBean.prepareNew}" styleClass="btn btn-orange"/>
-                <h:commandButton value="Sil (formdaki)" action="#{employeeBean.deleteCurrent}" styleClass="btn btn-red"/>
-                <h:commandButton value="Yenile" action="#{employeeBean.refresh}" styleClass="btn btn-gray"/>
+                <h:commandButton value="Yeni Ekle" action="#{employeeBean.prepareNew}" styleClass="btn btn-warning me-2"/>
+                <h:commandButton value="Sil (formdaki)" action="#{employeeBean.deleteCurrent}" styleClass="btn btn-danger me-2"/>
+                <h:commandButton value="Yenile" action="#{employeeBean.refresh}" styleClass="btn btn-secondary me-2"/>
             </h:form>
         </div>
 
@@ -48,7 +42,7 @@
                     <h:outputLabel value="Firma:" for="companyId"/>
                     <h:selectOneMenu id="companyId" value="#{employeeBean.companyId}" required="true"
                                      requiredMessage="Firma seçilmelidir.">
-                        <f:selectItem itemLabel="— Firma seçin —"/>
+                        <f:selectItem itemLabel="Firma seçin"/>
                         <f:selectItems value="#{employeeBean.companies}" var="c"
                                        itemValue="#{c.id}" itemLabel="#{c.title}"/>
                     </h:selectOneMenu>
@@ -61,12 +55,12 @@
 
                     <h:outputLabel value="Doğum Tarihi:" for="birthDate"/>
                     <h:inputText id="birthDate" value="#{employeeBean.employee.birthDate}">
-                        <f:convertDateTime type="date" pattern="yyyy-MM-dd"/>
+                        <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
                     </h:inputText>
 
                     <h:outputLabel value="İşe Giriş Tarihi:" for="startDate"/>
                     <h:inputText id="startDate" value="#{employeeBean.employee.startDate}">
-                        <f:convertDateTime type="date" pattern="yyyy-MM-dd"/>
+                        <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
                     </h:inputText>
 
                     <h:outputLabel value="Telefon:" for="phone"/>
@@ -79,17 +73,17 @@
                 <div class="button-area">
                     <h:commandButton value="Kaydet"
                                      action="#{employeeBean.createEmployee}"
-                                     styleClass="btn btn-orange"
+                                     styleClass="btn btn-warning me-2"
                                      rendered="#{employeeBean.employee.id == null}"/>
 
                     <h:commandButton value="Güncelle"
                                      action="#{employeeBean.updateEmployee}"
-                                     styleClass="btn"
+                                     styleClass="btn btn-primary me-2"
                                      rendered="#{employeeBean.employee.id != null}"/>
 
                     <h:commandButton value="Temizle"
                                      action="#{employeeBean.clearForm}"
-                                     styleClass="btn btn-gray"/>
+                                     styleClass="btn btn-secondary me-2"/>
                 </div>
 
             </h:form>
@@ -101,7 +95,7 @@
 
             <h:dataTable value="#{employeeBean.employees}"
                          var="e"
-                         styleClass="data-table">
+                         styleClass="table table-bordered table-striped table-hover align-middle">
 
                 <h:column>
                     <f:facet name="header">Ad Soyad</f:facet>
@@ -138,18 +132,17 @@
 
                     <h:commandButton value="Düzenle"
                                      action="#{employeeBean.selectEmployee(e)}"
-                                     styleClass="btn"/>
+                                     styleClass="btn btn-primary me-2"/>
 
                     <h:commandButton value="Sil"
                                      action="#{employeeBean.deleteEmployee(e)}"
-                                     styleClass="btn btn-red"/>
+                                     styleClass="btn btn-danger me-2"/>
                 </h:column>
 
             </h:dataTable>
 
         </h:form>
 
-    </div>
+    </ui:define>
 
-</h:body>
-</html>
+</ui:composition>

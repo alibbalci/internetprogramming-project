@@ -1,0 +1,48 @@
+<ui:composition template="/template.xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core">
+
+    <ui:define name="title">Bildirimler</ui:define>
+
+    <ui:define name="styles">
+        <h:outputStylesheet library="css" name="notification-list.css"/>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h2 class="page-title">Bildirimler</h2>
+
+        <div class="table-panel">
+            <h:dataTable value="#{notificationRecordBean.notificationRecords}"
+                         var="n"
+                         styleClass="table table-bordered table-striped table-hover align-middle">
+
+                <h:column>
+                    <f:facet name="header">Bildirim Tarihi</f:facet>
+                    <h:outputText value="#{n.notificationDate}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Saati</f:facet>
+                    #{n.notificationTime}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Türü</f:facet>
+                    #{n.notificationType}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">İçeriği</f:facet>
+                    <h:outputText value="#{n.content}"/>
+                </h:column>
+
+            </h:dataTable>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

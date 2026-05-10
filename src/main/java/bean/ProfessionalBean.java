@@ -3,13 +3,13 @@ package bean;
 import entity.Professional;
 import facadeLocal.ProfessionalFacadeLocal;
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class ProfessionalBean implements Serializable {
 
     private Professional professional = new Professional();

@@ -5,7 +5,7 @@ import entity.Employee;
 import facadeLocal.CompanyFacadeLocal;
 import facadeLocal.EmployeeFacadeLocal;
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Named("employeeBean")
-@SessionScoped
+@ViewScoped
 public class EmployeeBean implements Serializable {
 
     @EJB

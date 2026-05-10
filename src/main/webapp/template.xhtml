@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title><ui:insert name="title">İSG Yönetim Sistemi</ui:insert></title>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    <h:outputStylesheet library="css" name="template.css"/>
+    <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
+    <ui:insert name="styles"/>
+</h:head>
+
+<h:body>
+
+    <div class="topbar">
+        İSG Yönetim Sistemi
+        <h:link value="Panele Dön" outcome="/panel/index.xhtml" styleClass="back-link"/>
+    </div>
+
+    <div class="container">
+        <ui:insert name="content"/>
+    </div>
+
+</h:body>
+</html>
